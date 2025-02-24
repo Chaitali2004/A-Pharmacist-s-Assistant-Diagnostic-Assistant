@@ -1,4 +1,4 @@
-# A-Pharmacist-s-Assistant-Diagnostic-Assistant
+# A-Pharmacist-Diagnostic-Assistant
 This project utilizes an AI-powered Pharmacist’s Assistant through the application of OCR (Tesseract) to recognize text on handwritten prescriptions and match them against a specified medicine database. This makes medicine identification efficient and enables the automatic generation of pharmacy orders. The Diagnostic Assistant also helps medical professionals analyze medical scans, patient reports, and symptoms to diagnose diseases.
 
 Features : - 
