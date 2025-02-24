@@ -1,0 +1,79 @@
+# Install Tesseract and necessary dependencies
+!pip install pytesseract
+!apt-get install tesseract-ocr
+
+# Import required libraries
+import cv2
+import pytesseract
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+# Specify the Tesseract executable path for Linux systems
+pytesseract.pytesseract.tesseract_cmd = r"/usr/bin/tesseract"  # Adjusted for Linux environment
+
+def prepare_image(file_path):
+    # Load the input image
+    img = cv2.imread(file_path)
+
+    # Validate if the image was successfully loaded
+    if img is None:
+        print(f"Error: Unable to load image at {file_path}")
+        return None
+
+    # Convert the image to grayscale for processing
+    grayscale_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # Enhance contrast using adaptive thresholding
+    binary_img = cv2.adaptiveThreshold(grayscale_img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                       cv2.THRESH_BINARY, 11, 2)
+
+    # Reduce noise from the image
+    noise_reduced_img = cv2.fastNlMeansDenoising(binary_img, h=30)
+
+    # Apply morphological transformations to refine text areas
+    morph_kernel = np.ones((1, 1), np.uint8)
+    refined_img = cv2.dilate(noise_reduced_img, morph_kernel, iterations=1)
+    refined_img = cv2.erode(refined_img, morph_kernel, iterations=1)
+
+    # Scale the image for better OCR accuracy
+    final_img = cv2.resize(refined_img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+
+    return final_img
+
+def recognize_text(file_path):
+    processed_img = prepare_image(file_path)
+    if processed_img is None:
+        return None, None
+
+    # Extract text using Tesseract OCR
+    text_output = pytesseract.image_to_string(processed_img, lang="eng")
+
+    return text_output, processed_img
+
+def execute():
+    img_file = "/content/prescription.jpg"  # Provide the image path here
+
+    # Confirm the image file is present
+    if not os.path.exists(img_file):
+        print(f"Error: No image found at {img_file}")
+        return
+
+    # Perform text extraction
+    detected_text, processed_img = recognize_text(img_file)
+    if detected_text is None:
+        print("Error: Text extraction failed due to image loading issue")
+        return
+    if detected_text.strip():
+        print("\n Extracted Text:\n", detected_text)
+    else:
+        print(" No text detected. Consider altering preprocessing steps or using a clearer image.")
+
+    # Display the processed image for analysis
+    plt.imshow(processed_img, cmap="gray")
+    plt.title("Image Processed for OCR")
+    plt.axis("off")
+    plt.show()
+
+if __name__ == "__main__":
+    execute()
