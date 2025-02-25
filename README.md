@@ -10,33 +10,33 @@ Features : -
 6. Error Reduction and Accuracy Enhancement: Improves text recognition through adaptive thresholding and denoising techniques.
 7. Scalability: Designed to integrate seamlessly with hospital and pharmacy databases.
 
-Installation & Setup
-Prerequisites
+Installation & Setup - 
+Prerequisites,
+
 Ensure the following dependencies are installed:
-Python 3.x
-OpenCV
-Tesseract OCR
-NumPy
-Matplotlib
-pytesseract
-Flask (optional, for API integration)
-TensorFlow/Keras or PyTorch (for deep learning-based medical image analysis)
+Python 3.x,
+OpenCV,
+Tesseract OCR,
+NumPy,
+Matplotlib,
+pytesseract,
+Flask (optional, for API integration),
+TensorFlow/Keras or PyTorch (for deep learning-based medical image analysis),
 
 Install Dependencies
 pip install numpy opencv-python pytesseract matplotlib flask tensorflow torch torchvision
 
 Install Tesseract OCR
+
 On Linux: - 
 sudo apt-get install tesseract-ocr.
+
 
 On Windows: -
 Download and install Tesseract from Tesseract OCR GitHub.
 
 Set Up the Project
-Clone this repository and navigate to the project directory:
-
-git clone https://github.com/your-repo/pharmacist-assistant.git
-cd pharmacist-assistant
+Clone this repository and navigate to the project directory: - [git clone https://github.com/your-repo/pharmacist-assistant.git](https://github.com/Chaitali2004/A-Pharmacist-s-Assistant-Diagnostic-Assistant/tree/main)
 
 Running the Code
 Extract Text from a Handwritten Prescription
